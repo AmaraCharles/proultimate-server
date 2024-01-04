@@ -1,13 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-var router = express.Router();
-
 
 const app = express();
-// const port = process.env.PORT || 8080;
-// mongoose.set('strictQuery', false);
-
+const port = process.env.PORT || 8080;
 
 // Connect to MongoDB (Make sure to replace 'your_database_uri' with your actual MongoDB URI)
 mongoose.connect("mongodb+srv://Harcourt:eckankar2757101@testcluster.hlwy0.gcp.mongodb.net/prohealth?retryWrites=true&w=majority",
@@ -19,7 +15,10 @@ const Image = mongoose.model('Image', {
 });
 
 // Middleware to parse JSON in requests
-router.use(bodyParser.json());
+app.use(bodyParser.json());
+
+// Create a router instance
+const router = express.Router();
 
 // Endpoint to store image URL
 router.post('/kyc', async (req, res) => {
@@ -37,22 +36,23 @@ router.post('/kyc', async (req, res) => {
   }
 });
 
+// Endpoint for fetching images
+router.get('/kyc/fetch-images', async (req, res) => {
+  try {
+    const images = await Image.find();
+    res.json(images);
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
-  
-  // Endpoint for fetching images
-  router.get('/kyc/fetch-images', async (req, res) => {
-    try {
-      const images = await Image.find();
-      res.json(images);
-    } catch (error) {
-      console.error('Error fetching images:', error);
-      res.status(500).send('Internal Server Error');
-    }
-  });
+// Mount the router
+app.use('/', router);
 
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-module.exports = router;
+module.exports = app; // Export the app instance for testing or other uses
