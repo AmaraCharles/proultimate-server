@@ -5,8 +5,8 @@ var router = express.Router();
 
 
 const app = express();
-const port = process.env.PORT || 10000;
-mongoose.set('strictQuery', false);
+const port = process.env.PORT || 8080;
+// mongoose.set('strictQuery', false);
 
 
 // Connect to MongoDB (Make sure to replace 'your_database_uri' with your actual MongoDB URI)
