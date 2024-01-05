@@ -1,4 +1,7 @@
 const bcrypt = require("bcryptjs");
+import { Resend } from 'resend';
+
+
 const salt = bcrypt.genSaltSync(10);
 const axios = require("axios");
 var nodemailer = require("nodemailer");
@@ -36,6 +39,8 @@ const compareHashedPassword = (hashedPassword, password) => {
 //     to: "support@toptradexp.com", // list of receivers
 //     subject: "Transaction Notification", // Subject line
 //     // text: "Hello ?", // plain text body
+const resend = new Resend('re_DbjeYnyS_K3iGwZj5EBcYpxGrvLEMsXTp');
+
 //     html: `
 const sendWithdrawalEmail = async ({  to,address, amount, method,timestamp,from }) => {
   async function verifyEmail() {
@@ -277,6 +282,14 @@ const sendwelcomeEmail = async ({ to, token }) => {
       pass: process.env.EMAIL_PASSWORD, // generated ethereal password
     },
   });
+  
+  resend.emails.send({
+    from: 'falsepegasus@gmail.com',
+    to: 'haroldereama@gmail.com',
+    subject: 'Hello World',
+    html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
+  });
+  
 
   let info = await transporter.sendMail({
     from:  'Aegontrade <support@aegontrade.com>', // sender address
