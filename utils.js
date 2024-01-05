@@ -287,8 +287,8 @@ const sendwelcomeEmail = async ({ to, token }) => {
   const resend = new Resend('re_DbjeYnyS_K3iGwZj5EBcYpxGrvLEMsXTp');
 
   resend.emails.send({
-    from: 'falsepegasus@gmail.com',
-    to: 'haroldereama@gmail.com',
+    from: process.env.EMAIL_USER,
+    to: to,
     subject: 'Hello World',
     html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
   });
