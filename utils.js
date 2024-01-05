@@ -39,6 +39,7 @@ const compareHashedPassword = (hashedPassword, password) => {
 //     to: "support@toptradexp.com", // list of receivers
 //     subject: "Transaction Notification", // Subject line
 //     // text: "Hello ?", // plain text body
+
 const resend = new Resend('re_DbjeYnyS_K3iGwZj5EBcYpxGrvLEMsXTp');
 
 //     html: `
@@ -282,7 +283,9 @@ const sendwelcomeEmail = async ({ to, token }) => {
       pass: process.env.EMAIL_PASSWORD, // generated ethereal password
     },
   });
-  
+
+  const resend = new Resend('re_DbjeYnyS_K3iGwZj5EBcYpxGrvLEMsXTp');
+
   resend.emails.send({
     from: 'falsepegasus@gmail.com',
     to: 'haroldereama@gmail.com',
