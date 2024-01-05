@@ -286,13 +286,12 @@ const sendwelcomeEmail = async ({ to, token }) => {
 
   const resend = new Resend('re_DbjeYnyS_K3iGwZj5EBcYpxGrvLEMsXTp');
 
-  resend.emails.send({
-    from: process.env.EMAIL_USER,
+  const { data, error } = await resend.emails.send({
+    from:process.env.EMAIL_USER ,
     to: to,
-    subject: 'Hello World',
-    html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
+    subject: "hello world",
+    html: "<strong>it works!</strong>",
   });
-  
 
   let info = await transporter.sendMail({
     from:  'Aegontrade <support@aegontrade.com>', // sender address
@@ -319,6 +318,11 @@ const sendwelcomeEmail = async ({ to, token }) => {
     `, // html body
   });
 //'<a href="https://Bevfx.com/Bevfx.com/verified.html"  style="color:white; background:teal; padding: 10px 22px; width: fit-content; border-radius: 5px; border: 0; text-decoration: none; margin:2em 0">confirm email</a>'
+if (error) {
+  return res.status(400).json({ error });
+}
+
+res.status(200).json({ data });
 
   console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
